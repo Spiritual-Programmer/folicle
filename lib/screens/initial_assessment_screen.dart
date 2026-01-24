@@ -1,14 +1,198 @@
 import 'package:flutter/material.dart';
 
-class InitialAssessmentScreen extends StatelessWidget {
+class InitialAssessmentScreen extends StatefulWidget {
   const InitialAssessmentScreen({super.key});
 
   @override
+  State<InitialAssessmentScreen> createState() =>
+      _InitialAssessmentScreenState();
+}
+
+class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
+  int currentStep = 0;
+
+  // Hair Growth Areas
+  List<String> hairGrowthAreas = [];
+  final List<String> optionshairGrowthAreas = [
+    'Chin',
+    'Upper Lip',
+    'Jawline',
+    'Neck',
+  ];
+
+  // Treatments
+  List<String> treatments = [];
+  final List<String> optionstreatments = [
+    'Laser Hair Removal',
+    'Electrolysis',
+    'Prescription Medication',
+    'Topical Creams',
+    'Natural Remedies',
+  ];
+
+  // Known conditions
+  List<String> conditions = [];
+  final List<String> optionsConditions = ['None', 'PCOS', 'Unsure'];
+
+  // Hair removal methods
+  List<String> hairRemovalMethods = [];
+  final List<String> optionsHairRemoval = [
+    'Shaving',
+    'Waxing',
+    'Plucking',
+    'None',
+  ];
+
+  @override
   Widget build(BuildContext context) {
+    Widget content = const SizedBox.shrink();
+
+    if (currentStep == 0) {
+      content = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Hair growth areas',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          ...optionshairGrowthAreas.map(
+            (area) => CheckboxListTile(
+              title: Text(area),
+              value: hairGrowthAreas.contains(area),
+              onChanged: (val) {
+                setState(() {
+                  if (val == true) {
+                    hairGrowthAreas.add(area);
+                  } else {
+                    hairGrowthAreas.remove(area);
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+        ],
+      );
+    } else if (currentStep == 1) {
+      content = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Previous treatments',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          ...optionstreatments.map(
+            (treatment) => CheckboxListTile(
+              title: Text(treatment),
+              value: treatments.contains(treatment),
+              onChanged: (val) {
+                setState(() {
+                  if (val == true) {
+                    treatments.add(treatment);
+                  } else {
+                    treatments.remove(treatment);
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+        ],
+      );
+    } else if (currentStep == 2) {
+      content = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Known conditions',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          ...optionsConditions.map(
+            (condition) => CheckboxListTile(
+              title: Text(condition),
+              value: conditions.contains(condition),
+              onChanged: (val) {
+                setState(() {
+                  if (val == true) {
+                    conditions.add(condition);
+                  } else {
+                    conditions.remove(condition);
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+        ],
+      );
+    } else if (currentStep == 3) {
+      content = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Hair removal methods',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          ...optionsHairRemoval.map(
+            (method) => CheckboxListTile(
+              title: Text(method),
+              value: hairRemovalMethods.contains(method),
+              onChanged: (val) {
+                setState(() {
+                  if (val == true) {
+                    hairRemovalMethods.add(method);
+                  } else {
+                    hairRemovalMethods.remove(method);
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Initial Assessment')),
-      body: const Center(
-        child: Text('Initial Assessment Screen - Coming Soon'),
+      appBar: AppBar(title: const Text("Let's personalize Folicle")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(child: content),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              if (currentStep > 0)
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      currentStep--;
+                    });
+                  },
+                  child: const Text('Back'),
+                ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    currentStep++;
+                  });
+                },
+                child: const Text('Next'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
