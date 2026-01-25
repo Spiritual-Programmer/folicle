@@ -10,7 +10,7 @@ class InsightsScreen extends StatelessWidget {
     final history = WeeklyHistory.getAllHistory();
     final weekCount = WeeklyHistory.getWeekCount();
 
-    // Need at least 3 weeks for meaningful correlation
+    // Need at least 3 weeks for lagged correlation (2 lag pairs)
     if (weekCount < 3) {
       return Scaffold(
         appBar: AppBar(title: const Text('Insights'), centerTitle: true),
@@ -33,7 +33,7 @@ class InsightsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Complete at least 3 weekly check-ins to see your insights.',
+                  'Complete at least 3 weekly check-ins to see your insights. Lagged correlation requires tracking how last week\'s behavior affects this week\'s hair growth.',
                   style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -138,19 +138,19 @@ class InsightsScreen extends StatelessWidget {
                       description =
                           'Good ${metric.toLowerCase()} helps reduce hirsutism';
                       color = Colors.green;
-                      icon = Icons.trending_down;
+                      icon = Icons.trending_up;
                     } else if (r < -0.1) {
                       impact = 'Mildly beneficial';
                       description =
                           'Good ${metric.toLowerCase()} helps reduce hirsutism';
                       color = Colors.lightGreen;
-                      icon = Icons.arrow_downward;
+                      icon = Icons.trending_up;
                     } else if (r > 0.1) {
                       impact = 'Concerning';
                       description =
                           'Lack of ${metric.toLowerCase()} may increase hirsutism';
                       color = Colors.red;
-                      icon = Icons.trending_up;
+                      icon = Icons.trending_down;
                     } else {
                       impact = 'Minimal effect';
                       description = '${metric} shows little impact';

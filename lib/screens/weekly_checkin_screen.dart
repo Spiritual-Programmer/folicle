@@ -72,9 +72,10 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
       resetRatings,
     );
 
-    // Calculate correlations if we have enough data (need at least 2 weeks)
+    // Calculate correlations if we have enough data
+    // Need at least 3 weeks for lagged correlation (2 lag pairs)
     final weekCount = WeeklyHistory.getWeekCount();
-    if (weekCount >= 2) {
+    if (weekCount >= 3) {
       final history = WeeklyHistory.getAllHistory();
       final correlations = TriggerCalculator.correlationsAgainstHairGrowth(
         sugar: history.sugar,
@@ -195,7 +196,7 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Week Saved!'),
         content: const Text(
-          'Keep tracking! You need at least 2 weeks of data to see correlations.',
+          'Keep tracking! You need at least 3 weeks of data to see correlations.',
         ),
         actions: [
           TextButton(

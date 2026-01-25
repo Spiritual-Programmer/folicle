@@ -54,8 +54,36 @@ class TriggerCalculator {
     return covarianceNumerator / stdProduct;
   }
 
-  /// Computes correlations of each input vs hair growth.
+  /// Computes lagged correlation with a 1-week delay.
+  /// Compares behavior at week N with hair growth at week N+1.
+  /// Requires at least 3 data points to compute meaningful lag correlation.
+  static double computeLaggedCorrelation(
+    List<double> seriesX,
+    List<double> seriesY,
+    int lag,
+  ) {
+    if (lag < 0) {
+      throw ArgumentError('Lag must be non-negative.');
+    }
+    if (lag >= seriesX.length || lag >= seriesY.length) {
+      return double.nan; // not enough data for this lag
+    }
+
+    // For lag=1: compare X[0..n-2] with Y[1..n-1]
+    // X at time t predicts Y at time t+lag
+    final laggedLength = seriesX.length - lag;
+    if (laggedLength < 2) return double.nan;
+
+    final List<double> laggedX = seriesX.sublist(0, laggedLength);
+    final List<double> laggedY = seriesY.sublist(lag);
+
+    return computePearsonCorrelation(laggedX, laggedY);
+  }
+
+  /// Computes lagged correlations (1-week delay) of each input vs hair growth.
+  /// This accounts for the biological delay between behavior and hair growth.
   /// All lists must be the same length (same number of weeks/samples).
+  /// Requires at least 3 weeks of data.
   static Map<String, double> correlationsAgainstHairGrowth({
     required List<double> sugar,
     required List<double> stress,
@@ -63,11 +91,12 @@ class TriggerCalculator {
     required List<double> exercise,
     required List<double> hairGrowth,
   }) {
+    // Use 1-week lag: last week's behavior affects this week's hair growth
     return {
-      'Sugar': computePearsonCorrelation(sugar, hairGrowth),
-      'Stress': computePearsonCorrelation(stress, hairGrowth),
-      'Sleep': computePearsonCorrelation(sleep, hairGrowth),
-      'Exercise': computePearsonCorrelation(exercise, hairGrowth),
+      'Sugar': computeLaggedCorrelation(sugar, hairGrowth, 1),
+      'Stress': computeLaggedCorrelation(stress, hairGrowth, 1),
+      'Sleep': computeLaggedCorrelation(sleep, hairGrowth, 1),
+      'Exercise': computeLaggedCorrelation(exercise, hairGrowth, 1),
     };
   }
 
