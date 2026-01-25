@@ -279,7 +279,7 @@ class InsightsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'r = ${correlation.toStringAsFixed(2)}',
+                    '${(correlation.abs() * 100).toStringAsFixed(0)}%',
                     style: TextStyle(
                       color: color,
                       fontWeight: FontWeight.bold,
