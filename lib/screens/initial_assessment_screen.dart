@@ -188,15 +188,46 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (currentStep == 3) {
-                    // Last step - mark assessment complete and navigate to weekly check-in
-                    storage.appDataBox.put(
+                    if (storage.appDataBox.get(
                       storage.StorageKeys.isAssessmentComplete,
-                      true,
-                    );
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const HomeScreen()),
-                      (_) => false,
-                    );
+                    ) != true) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Welcome!'),
+                          content: const Text(
+                            "You're ready to start tracking your hirsutism factors!",
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                storage.appDataBox.put(
+                                  storage.StorageKeys.isAssessmentComplete,
+                                  true,
+                                );
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (_) => const HomeScreen(),
+                                  ),
+                                  (_) => false,
+                                );
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      // Last step - mark assessment complete and navigate to weekly check-in
+                      storage.appDataBox.put(
+                        storage.StorageKeys.isAssessmentComplete,
+                        true,
+                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        (_) => false,
+                      );
+                    }
                   } else {
                     setState(() {
                       currentStep++;

@@ -19,16 +19,21 @@ class HomeScreen extends StatelessWidget {
     if (!_isAssessmentComplete) {
       return Scaffold(
         body: Center(child: Text("Welcome! Let's get you started.")),
-        bottomNavigationBar: TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const InitialAssessmentScreen(),
-              ),
-            );
-          },
-          child: const SafeArea(child: Text('Take Initial Assessment')),
+        bottomNavigationBar: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              child: Text('Take Initial Assessment'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const InitialAssessmentScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       );
     }
