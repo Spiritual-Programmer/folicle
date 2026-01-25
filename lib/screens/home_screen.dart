@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:folicle/screens/initial_assessment_screen.dart';
 import 'package:folicle/screens/weekly_checkin_screen.dart';
+import 'package:folicle/screens/insights_screen.dart';
 import 'package:folicle/models/storage.dart' as storage;
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,7 +20,27 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!_isAssessmentComplete) {
       return Scaffold(
-        body: Center(child: Text("Welcome! Let's get you started.")),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Folicle',
+              style: GoogleFonts.pacifico(
+                fontSize: 48,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Image.asset(
+              'assets/illustrations/follicle_homepage.jpg',
+              height: 300,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 24),
+            Center(child: Text("Welcome! Let's get you started.")),
+          ],
+        ),
         bottomNavigationBar: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(16.0),
@@ -38,11 +60,27 @@ class HomeScreen extends StatelessWidget {
       );
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Folicle'), centerTitle: true),
+      //appBar: AppBar(title: const Text('Folicle'), centerTitle: true),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text(
+              'Folicle',
+              style: GoogleFonts.pacifico(
+                fontSize: 48,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Image.asset(
+              'assets/illustrations/follicle_homepage.jpg',
+              height: 300,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 48),
             ElevatedButton(
               child: Text(
                 _isAssessmentComplete ? 'Weekly Check-In' : 'Get Started',
@@ -65,6 +103,20 @@ class HomeScreen extends StatelessWidget {
                 }
               },
             ),
+            // Show insights button after assessment is complete
+            if (_isAssessmentComplete) ...[
+              const SizedBox(height: 16),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const InsightsScreen()),
+                  );
+                },
+                icon: const Icon(Icons.analytics_outlined),
+                label: const Text('View Insights'),
+              ),
+            ],
             // Show retake option after assessment is complete
             if (_isAssessmentComplete) ...[
               const SizedBox(height: 16),

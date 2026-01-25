@@ -14,6 +14,13 @@ class InitialAssessmentScreen extends StatefulWidget {
 class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
   int currentStep = 0;
 
+  List<String> stepImages = [
+    'assets/illustrations/hair_growth.jpg',
+    'assets/illustrations/treatments.jpg',
+    'assets/illustrations/conditions.jpg',
+    'assets/illustrations/removal_methods.jpg',
+  ];
+
   // Hair Growth Areas
   List<String> hairGrowthAreas = [];
   final List<String> optionshairGrowthAreas = [
@@ -35,7 +42,14 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
 
   // Known conditions
   List<String> conditions = [];
-  final List<String> optionsConditions = ['None', 'PCOS', 'Unsure'];
+  final List<String> optionsConditions = [
+    'PCOS (Polycystic Ovary Syndrome)',
+    'Hormonal Imbalance (Doctor mentioned)',
+    'Thyroid Issues',
+    'Insulin Resistance/Prediabetes',
+    'None',
+    'Unsure',
+  ];
 
   // Hair removal methods
   List<String> hairRemovalMethods = [];
@@ -43,6 +57,8 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
     'Shaving',
     'Waxing',
     'Plucking',
+    'Epilator',
+    'Depilatory Creams',
     'None',
   ];
 
@@ -52,8 +68,10 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
 
     if (currentStep == 0) {
       content = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image.asset(stepImages[0], height: 200, fit: BoxFit.contain),
+          const SizedBox(height: 24),
           const Text(
             'Hair growth areas',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -80,8 +98,10 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
       );
     } else if (currentStep == 1) {
       content = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image.asset(stepImages[1], height: 200, fit: BoxFit.contain),
+          const SizedBox(height: 24),
           const Text(
             'Previous treatments',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -108,8 +128,10 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
       );
     } else if (currentStep == 2) {
       content = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image.asset(stepImages[2], height: 150, fit: BoxFit.contain),
+          const SizedBox(height: 24),
           const Text(
             'Known conditions',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -136,8 +158,10 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
       );
     } else if (currentStep == 3) {
       content = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image.asset(stepImages[3], height: 200, fit: BoxFit.contain),
+          const SizedBox(height: 24),
           const Text(
             'Hair removal methods',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -168,7 +192,7 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
       appBar: AppBar(title: const Text("Let's personalize Folicle")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(child: content),
+        child: Center(child: SingleChildScrollView(child: content)),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -189,8 +213,9 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
                 onPressed: () {
                   if (currentStep == 3) {
                     if (storage.appDataBox.get(
-                      storage.StorageKeys.isAssessmentComplete,
-                    ) != true) {
+                          storage.StorageKeys.isAssessmentComplete,
+                        ) !=
+                        true) {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(

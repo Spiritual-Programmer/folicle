@@ -29,6 +29,7 @@ class FolicleApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: const Color.fromARGB(255, 224, 125, 242),
+        scaffoldBackgroundColor: Colors.white,
       ),
       initialRoute: AppRoutes.home,
       routes: AppRoutes.routes,
