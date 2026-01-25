@@ -226,20 +226,68 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
       'Exercise',
       'Hair Growth',
     ];
+
+    const List<String> stepImages = [
+      'assets/illustrations/sugar.jpg',
+      'assets/illustrations/stress.jpg',
+      'assets/illustrations/sleep.jpg',
+      'assets/illustrations/exercise.jpg',
+      'assets/illustrations/hair_growth.jpg',
+    ];
+
     Widget body;
     if (currentStep == currentWeekRatings.length) {
-      body = Column(
-        children: [
-          const Text("Do these ratings look correct?"),
-          ...List.generate(currentWeekRatings.length, (int i) {
-            return Text("${labels[i]}: ${currentWeekRatings[i].toInt()}");
-          }),
-        ],
+      body = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Review",
+              style: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.4,
+              ),
+            ),
+            const SizedBox(height: 32),
+            ...List.generate(currentWeekRatings.length, (int i) {
+              final rating = currentWeekRatings[i].toInt();
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      labels[i],
+                      style: const TextStyle(fontSize: 17, letterSpacing: -0.4),
+                    ),
+                    Text(
+                      '$rating',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.grey.shade600,
+                        letterSpacing: -0.4,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ],
+        ),
       );
     } else {
       body = Column(
         children: <Widget>[
+          Image.asset(
+            stepImages[currentStep],
+            height: 200,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 24),
           Text(questions[currentStep]),
+          const SizedBox(height: 16),
           Slider(
             year2023: false,
             value: currentWeekRatings[currentStep],
