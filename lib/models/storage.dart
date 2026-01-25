@@ -7,6 +7,9 @@ Box appDataBox = Hive.box("delete_me");
 
 /// Storage keys - centralized to avoid typos
 class StorageKeys {
+  // Track if user has completed initial assessment
+  static const String isAssessmentComplete = 'isAssessmentComplete';
+  
   // Current week's in-progress ratings (0-5 for each metric)
   static const String currentWeekRatings = 'currentWeekRatings';
 

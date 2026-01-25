@@ -213,11 +213,11 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
   @override
   Widget build(BuildContext context) {
     const List<String> questions = [
-      'How much sugar did you consume this week?',
-      'How stressfull was this week for you?',
-      'How well did you sleep this week?',
-      'How much exercise did you do this week?',
-      'How much hair growth have you noticed this week?',
+      'How much sugar did you consume last week?',
+      'How stressful was last week for you?',
+      'How well did you sleep last week?',
+      'How much exercise did you do last week?',
+      'How much hair growth have you noticed last week?',
     ];
     const List<String> labels = [
       'Sugar',
