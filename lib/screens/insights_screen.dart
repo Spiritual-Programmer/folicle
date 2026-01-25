@@ -87,14 +87,14 @@ class InsightsScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 ...ranked.map((entry) {
                   final metric = entry.key;
-                  final r = entry.value;
+                  double? r = entry.value;
 
                   if (r.isNaN) {
                     return _buildInsightCard(
                       context,
                       metric,
-                      'Insufficient variation',
-                      'Try varying your $metric levels to see its impact.',
+                      'Unknown',
+                      'Not enough data to draw a correlation.',
                       Colors.grey,
                       Icons.info_outline,
                     );
@@ -120,16 +120,18 @@ class InsightsScreen extends StatelessWidget {
                           'High ${metric.toLowerCase()} linked to hirsutism';
                       color = Colors.orange;
                       icon = Icons.arrow_upward;
-                    } else if (r < -0.1) {
-                      impact = 'Beneficial';
-                      description = '${metric} may help reduce hirsutism';
-                      color = Colors.green;
-                      icon = Icons.trending_down;
+                    // Hmmm, no, we probably shouldn't encourage people to be MORE stressed to reduce hair growth.
+                    //} else if (r < -0.1) {
+                    //  impact = 'Beneficial';
+                    //  description = '${metric} may help reduce hirsutism';
+                    //  color = Colors.green;
+                    //  icon = Icons.trending_down;
                     } else {
                       impact = 'Minimal effect';
                       description = '${metric} shows little impact';
                       color = Colors.grey;
                       icon = Icons.horizontal_rule;
+                      r = null;
                     }
                   } else {
                     // For beneficial factors (sleep, exercise): negative correlation = good
@@ -145,17 +147,18 @@ class InsightsScreen extends StatelessWidget {
                           'Good ${metric.toLowerCase()} helps reduce hirsutism';
                       color = Colors.lightGreen;
                       icon = Icons.trending_up;
-                    } else if (r > 0.1) {
-                      impact = 'Concerning';
-                      description =
-                          'Lack of ${metric.toLowerCase()} may increase hirsutism';
-                      color = Colors.red;
-                      icon = Icons.trending_down;
+                    //} else if (r > 0.1) {
+                    //  impact = 'Concerning';
+                    //  description =
+                    //      'Lack of ${metric.toLowerCase()} may increase hirsutism';
+                    //  color = Colors.red;
+                    //  icon = Icons.trending_down;
                     } else {
                       impact = 'Minimal effect';
                       description = '${metric} shows little impact';
                       color = Colors.grey;
                       icon = Icons.horizontal_rule;
+                      r = null;
                     }
                   }
 
