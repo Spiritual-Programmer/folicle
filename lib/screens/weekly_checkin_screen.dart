@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:folicle/screens/home_screen.dart';
+import 'package:folicle/models/storage.dart' as storage;
 
 class WeeklyCheckInScreen extends StatefulWidget {
   const WeeklyCheckInScreen({super.key});
@@ -10,7 +11,12 @@ class WeeklyCheckInScreen extends StatefulWidget {
 
 class WeeklyState extends State<WeeklyCheckInScreen> {
   int currentStep = 0;
-  List<int> numDays = [0, 0, 0];
+  List<double> numDays = () {
+    if (storage.weeklyHistoryBox.get('numDays') is! List<double>) {
+      storage.weeklyHistoryBox.put('numDays', [0.0, 0.0, 0.0]);
+    }
+    return storage.weeklyHistoryBox.get('numDays');
+  }();
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +43,11 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
           Text(questions[currentStep]),
           Slider(
             year2023: false,
-            value: numDays[currentStep].toDouble(),
+            value: numDays[currentStep],
             label: numDays[currentStep].toString(),
-            max: 7,
-            divisions: 7,
             onChanged: (double value) {
               setState(() {
-                numDays[currentStep] = value.round();
+                numDays[currentStep] = value;
               });
             },
           ),
@@ -80,6 +84,7 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
                   setState(() {
                     if (currentStep == numDays.length) {
                       debugPrint('Got the values: $numDays');
+                      storage.weeklyHistoryBox.put("numDays", numDays);
                       Navigator.of(context).pop();
                     } else {
                       currentStep += 1;

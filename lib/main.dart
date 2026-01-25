@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:folicle/config/app_config.dart';
 import 'package:folicle/routes/app_routes.dart';
+//import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:folicle/models/storage.dart' as storage;
 
-void main() {
+void main() async {
+  // initialize hive
+  await Hive.initFlutter();
+  storage.weeklyHistoryBox = await Hive.openBox("boks");
+
+  // sanity check
+  storage.weeklyHistoryBox.put("foo", 42);
+  int bar = storage.weeklyHistoryBox.get("foo");
+  assert(bar == 42);
+
   runApp(const FolicleApp());
 }
 
