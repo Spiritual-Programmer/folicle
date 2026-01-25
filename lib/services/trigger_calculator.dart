@@ -83,7 +83,7 @@ class TriggerCalculator {
   /// Computes lagged correlations (1-week delay) of each input vs hair growth.
   /// This accounts for the biological delay between behavior and hair growth.
   /// All lists must be the same length (same number of weeks/samples).
-  /// Requires at least 3 weeks of data.
+  /// Requires at least 4 weeks of data.
   static Map<String, double> correlationsAgainstHairGrowth({
     required List<double> sugar,
     required List<double> stress,
