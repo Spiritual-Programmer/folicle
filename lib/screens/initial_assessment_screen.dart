@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:folicle/models/storage.dart' as storage;
 import 'package:folicle/screens/weekly_checkin_screen.dart';
+import 'package:folicle/screens/home_screen.dart';
 
 class InitialAssessmentScreen extends StatefulWidget {
   const InitialAssessmentScreen({super.key});
@@ -188,9 +189,13 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
                 onPressed: () {
                   if (currentStep == 3) {
                     // Last step - mark assessment complete and navigate to weekly check-in
-                    storage.appDataBox.put(storage.StorageKeys.isAssessmentComplete, true);
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => const WeeklyCheckInScreen()),
+                    storage.appDataBox.put(
+                      storage.StorageKeys.isAssessmentComplete,
+                      true,
+                    );
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const HomeScreen()),
+                      (_) => false,
                     );
                   } else {
                     setState(() {

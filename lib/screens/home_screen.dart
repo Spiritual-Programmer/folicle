@@ -16,6 +16,22 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!_isAssessmentComplete) {
+      return Scaffold(
+        body: Center(child: Text("Welcome! Let's get you started.")),
+        bottomNavigationBar: TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const InitialAssessmentScreen(),
+              ),
+            );
+          },
+          child: const SafeArea(child: Text('Take Initial Assessment')),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Folicle'), centerTitle: true),
       body: Center(
@@ -57,6 +73,40 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
                 child: const Text('Retake Assessment'),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Delete all data'),
+                      content: const Text('Are you sure you want to delete?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            storage.appDataBox.clear().then((_) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (_) => const HomeScreen(),
+                                ),
+                                (_) => false,
+                              );
+                            });
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: const Text("Delete all data"),
               ),
             ],
           ],
