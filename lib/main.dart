@@ -8,11 +8,11 @@ import 'package:folicle/models/storage.dart' as storage;
 void main() async {
   // initialize hive
   await Hive.initFlutter();
-  storage.weeklyHistoryBox = await Hive.openBox("boks");
+  storage.appDataBox = await Hive.openBox("boks");
 
   // sanity check
-  storage.weeklyHistoryBox.put("foo", 42);
-  int bar = storage.weeklyHistoryBox.get("foo");
+  storage.appDataBox.put("foo", 42);
+  int bar = storage.appDataBox.get("foo");
   assert(bar == 42);
 
   runApp(const FolicleApp());
