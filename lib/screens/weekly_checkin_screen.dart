@@ -12,27 +12,37 @@ class WeeklyCheckInScreen extends StatefulWidget {
 class WeeklyState extends State<WeeklyCheckInScreen> {
   int currentStep = 0;
   List<double> numDays = () {
-    if (storage.weeklyHistoryBox.get('numDays') is! List<double>) {
-      storage.weeklyHistoryBox.put('numDays', [0.0, 0.0, 0.0]);
+    var stored = storage.weeklyHistoryBox.get('numDays');
+    if (stored is! List<double> || stored.length != 5) {
+      storage.weeklyHistoryBox.put('numDays', [0.0, 0.0, 0.0, 0.0, 0.0]);
+      return [0.0, 0.0, 0.0, 0.0, 0.0];
     }
-    return storage.weeklyHistoryBox.get('numDays');
+    return stored;
   }();
 
   @override
   Widget build(BuildContext context) {
     const List<String> questions = [
-      'How many days this week have you eaten a large amount of sugar?',
-      'How many days this week have been stressful for you?',
-      'How many days this week have you slept well?',
+      'How much sugar did you consume this week?',
+      'How stressfull was this week for you?',
+      'How well did you sleep this week?',
+      'How much exercise did you do this week?',
+      'How much hair growth have you noticed this week?',
     ];
-    const List<String> labels = ['Sugar days', 'Stress days', 'Sleep days'];
+    const List<String> labels = [
+      'Sugar',
+      'Stress',
+      'Sleep',
+      'Exercise',
+      'Hair Growth',
+    ];
     Widget body;
     if (currentStep == numDays.length) {
       body = Column(
         children: [
-          const Text("Does this all look correct?"),
+          const Text("Does these ratings look correct?"),
           ...List.generate(numDays.length, (int i) {
-            return Text("${labels[i]}: ${numDays[i]}");
+            return Text("${labels[i]}: ${numDays[i].toInt()}");
           }),
         ],
       );
@@ -44,7 +54,10 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
           Slider(
             year2023: false,
             value: numDays[currentStep],
-            label: numDays[currentStep].toString(),
+            min: 0,
+            max: 5,
+            divisions: 5,
+            label: numDays[currentStep].toInt().toString(),
             onChanged: (double value) {
               setState(() {
                 numDays[currentStep] = value;
