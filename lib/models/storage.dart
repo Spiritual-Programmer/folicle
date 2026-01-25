@@ -10,6 +10,9 @@ class StorageKeys {
   // Current week's in-progress ratings (0-5 for each metric)
   static const String currentWeekRatings = 'currentWeekRatings';
 
+  // Track last check-in date to prevent duplicate entries
+  static const String lastCheckInDate = 'lastCheckInDate';
+
   // Historical data - one array per metric
   static const String sugarHistory = 'sugarHistory';
   static const String stressHistory = 'stressHistory';
