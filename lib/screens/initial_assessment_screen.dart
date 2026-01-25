@@ -212,6 +212,24 @@ class _InitialAssessmentScreenState extends State<InitialAssessmentScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (currentStep == 3) {
+                    // Save assessment data
+                    storage.appDataBox.put(
+                      storage.StorageKeys.hairGrowthAreas,
+                      hairGrowthAreas,
+                    );
+                    storage.appDataBox.put(
+                      storage.StorageKeys.treatments,
+                      treatments,
+                    );
+                    storage.appDataBox.put(
+                      storage.StorageKeys.conditions,
+                      conditions,
+                    );
+                    storage.appDataBox.put(
+                      storage.StorageKeys.hairRemovalMethods,
+                      hairRemovalMethods,
+                    );
+
                     if (storage.appDataBox.get(
                           storage.StorageKeys.isAssessmentComplete,
                         ) !=

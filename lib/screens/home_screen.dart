@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:folicle/screens/initial_assessment_screen.dart';
 import 'package:folicle/screens/weekly_checkin_screen.dart';
 import 'package:folicle/screens/insights_screen.dart';
+import 'package:folicle/screens/ai_coach_screen.dart';
 import 'package:folicle/models/storage.dart' as storage;
 import 'package:google_fonts/google_fonts.dart';
 
@@ -115,6 +116,17 @@ class HomeScreen extends StatelessWidget {
                 },
                 icon: const Icon(Icons.analytics_outlined),
                 label: const Text('View Insights'),
+              ),
+              const SizedBox(height: 16),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const AICoachScreen()),
+                  );
+                },
+                icon: const Icon(Icons.psychology_outlined),
+                label: const Text('AI Coach'),
               ),
             ],
             // Show retake option after assessment is complete

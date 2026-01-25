@@ -9,12 +9,18 @@ Box appDataBox = Hive.box("delete_me");
 class StorageKeys {
   // Track if user has completed initial assessment
   static const String isAssessmentComplete = 'isAssessmentComplete';
-  
+
   // Current week's in-progress ratings (0-5 for each metric)
   static const String currentWeekRatings = 'currentWeekRatings';
 
   // Track last check-in date to prevent duplicate entries
   static const String lastCheckInDate = 'lastCheckInDate';
+
+  // Initial assessment data
+  static const String hairGrowthAreas = 'hairGrowthAreas';
+  static const String treatments = 'treatments';
+  static const String conditions = 'conditions';
+  static const String hairRemovalMethods = 'hairRemovalMethods';
 
   // Historical data - one array per metric
   static const String sugarHistory = 'sugarHistory';

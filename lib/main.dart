@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:folicle/config/app_config.dart';
 import 'package:folicle/routes/app_routes.dart';
 //import 'package:hive/hive.dart';
@@ -6,6 +7,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:folicle/models/storage.dart' as storage;
 
 void main() async {
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
+  
   // initialize hive
   await Hive.initFlutter();
   storage.appDataBox = await Hive.openBox("boks");
