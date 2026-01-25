@@ -11,11 +11,20 @@ class WeeklyCheckInScreen extends StatefulWidget {
 
 class WeeklyState extends State<WeeklyCheckInScreen> {
   int currentStep = 0;
-  List<double> numDays = () {
-    var stored = storage.weeklyHistoryBox.get('numDays');
-    if (stored is! List<double> || stored.length != 5) {
-      storage.weeklyHistoryBox.put('numDays', [0.0, 0.0, 0.0, 0.0, 0.0]);
-      return [0.0, 0.0, 0.0, 0.0, 0.0];
+
+  // Current week's ratings for each metric (0-5)
+  List<double> currentWeekRatings = () {
+    var stored = storage.appDataBox.get(storage.StorageKeys.currentWeekRatings);
+    if (stored is! List<double> || stored.length != storage.MetricIndex.count) {
+      final defaultRatings = List<double>.filled(
+        storage.MetricIndex.count,
+        0.0,
+      );
+      storage.appDataBox.put(
+        storage.StorageKeys.currentWeekRatings,
+        defaultRatings,
+      );
+      return defaultRatings;
     }
     return stored;
   }();
@@ -37,30 +46,33 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
       'Hair Growth',
     ];
     Widget body;
-    if (currentStep == numDays.length) {
+    if (currentStep == currentWeekRatings.length) {
       body = Column(
         children: [
-          const Text("Does these ratings look correct?"),
-          ...List.generate(numDays.length, (int i) {
-            return Text("${labels[i]}: ${numDays[i].toInt()}");
+          const Text("Do these ratings look correct?"),
+          ...List.generate(currentWeekRatings.length, (int i) {
+            return Text("${labels[i]}: ${currentWeekRatings[i].toInt()}");
           }),
         ],
       );
     } else {
       body = Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(questions[currentStep]),
           Slider(
             year2023: false,
-            value: numDays[currentStep],
+            value: currentWeekRatings[currentStep],
             min: 0,
             max: 5,
             divisions: 5,
-            label: numDays[currentStep].toInt().toString(),
+            label: currentWeekRatings[currentStep].toInt().toString(),
             onChanged: (double value) {
               setState(() {
-                numDays[currentStep] = value;
+                currentWeekRatings[currentStep] = value;
+                storage.appDataBox.put(
+                  storage.StorageKeys.currentWeekRatings,
+                  currentWeekRatings,
+                );
               });
             },
           ),
@@ -95,16 +107,18 @@ class WeeklyState extends State<WeeklyCheckInScreen> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    if (currentStep == numDays.length) {
-                      debugPrint('Got the values: $numDays');
-                      storage.weeklyHistoryBox.put("numDays", numDays);
+                    if (currentStep == currentWeekRatings.length) {
+                      // TODO: Save to history here
+                      debugPrint('Got the values: $currentWeekRatings');
                       Navigator.of(context).pop();
                     } else {
                       currentStep += 1;
                     }
                   });
                 },
-                child: Text(currentStep == numDays.length ? 'Finish' : 'Next'),
+                child: Text(
+                  currentStep == currentWeekRatings.length ? 'Finish' : 'Next',
+                ),
               ),
             ],
           ),

@@ -1,4 +1,30 @@
 library folicle.storage;
+
 import "package:hive/hive.dart";
 
-Box weeklyHistoryBox = Hive.box("delete_me");
+/// Main storage box for all app data
+Box appDataBox = Hive.box("delete_me");
+
+/// Storage keys - centralized to avoid typos
+class StorageKeys {
+  // Current week's in-progress ratings (0-5 for each metric)
+  static const String currentWeekRatings = 'currentWeekRatings';
+
+  // Historical data - one array per metric
+  static const String sugarHistory = 'sugarHistory';
+  static const String stressHistory = 'stressHistory';
+  static const String sleepHistory = 'sleepHistory';
+  static const String exerciseHistory = 'exerciseHistory';
+  static const String hairGrowthHistory = 'hairGrowthHistory';
+}
+
+/// Metric indices for currentWeekRatings list
+class MetricIndex {
+  static const int sugar = 0;
+  static const int stress = 1;
+  static const int sleep = 2;
+  static const int exercise = 3;
+  static const int hairGrowth = 4;
+
+  static const int count = 5; // total number of metrics
+}
