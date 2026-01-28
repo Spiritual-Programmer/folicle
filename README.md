@@ -1,78 +1,98 @@
-Folicle
+# 🌸 Folicle
 
-Tagline: Personalized insights for facial hair growth triggers.
+***Personalized insights for facial hair growth triggers***
 
-Overview
+---
 
-Folicle is a mobile-first wellness app designed for women experiencing hirsutism. It helps users identify lifestyle and physiological factors—such as stress, sleep, sugar intake, and exercise—that may precede facial hair growth flare-ups. The app leverages lagged Pearson correlation to reveal patterns in user behavior and includes an AI coach to provide understandable, human-friendly insights.
+## 💡 Overview
 
-Disclaimer: Folicle provides statistical insights only. It does not predict outcomes or provide medical advice.
+Folicle is a **mobile-first wellness app** designed for women experiencing **hirsutism**. It helps users discover **personal lifestyle and physiological triggers**—like stress, sleep, sugar intake, and exercise—that may precede facial hair flare-ups.
 
-Features
+The app combines **lagged Pearson correlation** for statistical analysis with an **AI coach** that provides clear, human-friendly insights.
 
-Initial Assessment Questionnaire: Collects hair growth areas, previous treatments, known conditions, and hair removal methods.
+> ⚠️ **Disclaimer:** Folicle provides **statistical insights only**. It does **not predict outcomes or provide medical advice**.
 
-Weekly Check-In: Users rate stress, sugar intake, sleep quality, exercise, and hair growth on a 0–5 scale.
+---
 
-Lagged Pearson Correlation: Identifies which lifestyle factors are most correlated with hair growth, accounting for delayed effects.
+## ✨ Features
 
-AI Coach: Provides plain-language insights and tips based on correlation results.
+* **📝 Initial Assessment Questionnaire**
+  Collects hair growth areas, previous treatments, known conditions, and hair removal methods.
 
-Minimalist, User-Friendly UI: Sleek, calming design inspired by apps like Flow.
+* **📊 Weekly Check-In**
+  Users rate stress, sugar intake, sleep quality, exercise, and hair growth on a **0–5 scale**.
 
-Tech Stack
+* **📈 Lagged Pearson Correlation**
+  Identifies which lifestyle factors are most correlated with hair growth, accounting for delayed effects.
 
-Frontend: Flutter (Android & iOS, web-ready)
+* **🤖 AI Coach**
+  Provides plain-language, actionable insights based on your data.
 
-State Management: setState (simple MVP, can scale to Provider or Riverpod)
+* **🎨 Minimalist, User-Friendly UI**
+  Sleek, calming design inspired by apps like Flow.
 
-Local Storage: Hive (stores weekly check-ins and assessment data)
+---
 
-Optional Backend: Firebase (for future user auth and cloud storage)
+## 🛠 Tech Stack
 
-Data Analysis: Dart for Pearson correlation; AI layer can integrate LLM or rule-based insights
+| Layer            | Technology                           |
+| ---------------- | ------------------------------------ |
+| Frontend         | Flutter (Android & iOS, web-ready)   |
+| State Management | `setState` (MVP)                     |
+| Local Storage    | Hive (weekly check-ins & assessment) |
+| Optional Backend | Firebase (future user auth & cloud)  |
+| Data Analysis    | Dart (lagged Pearson correlation)    |
+| AI Layer         | Rule-based / LLM for insights        |
 
-How It Works
+---
 
-Initial Assessment: User selects hair growth areas, treatments, conditions, and hair removal methods.
+## ⚙️ How It Works
 
-Weekly Check-In: User rates their behavior and hair growth.
+1. **Initial Assessment**
+   User selects hair growth areas, treatments, conditions, and hair removal methods.
 
-Correlation Analysis: Lagged Pearson correlation identifies triggers over time.
+2. **Weekly Check-In**
+   Users rate their **behavior** and **hair growth** on a 0–5 scale.
 
-Insights: AI coach summarizes the strongest correlations in plain language.
+3. **Correlation Analysis**
+   Lagged Pearson correlation identifies patterns over time.
 
-Continuous Tracking: Accuracy and relevance of insights improve as more weekly data is collected.
+4. **AI Coach Insights**
+   The AI coach summarizes the strongest correlations in **plain language**.
 
-Installation
+5. **Continuous Tracking**
+   Insights improve as **more weekly data** is collected.
 
-Clone the repository:
+---
 
+## 📈 Screenshots
+
+*(Add your screenshots here for better impact — initial assessment, weekly check-in, AI insights, etc.)*
+
+---
+
+## 🚀 Installation
+
+```bash
+# Clone the repo
 git clone https://github.com/yourusername/folicle.git
 
-
-Navigate to the project directory:
-
+# Navigate to project folder
 cd folicle
 
-
-Install dependencies:
-
+# Install dependencies
 flutter pub get
 
-
-Run the app on your device/emulator:
-
+# Run on connected device or emulator
 flutter run
+```
 
-Future Improvements
+---
 
-User authentication and cloud syncing with Firebase
+## 🔮 Future Improvements
 
-Enhanced AI coach using OpenAI or local LLM for personalized recommendations
-
-Graphs and visualizations for longitudinal trends
-
-Push notifications for weekly check-ins
-
-Dark mode and more customization options
+* **User authentication** and cloud syncing via Firebase
+* **Enhanced AI coach** with OpenAI or local LLM integration
+* **Graphs & visualizations** for longitudinal trends
+* **Push notifications** for weekly check-ins
+* **Dark mode** and more customization options
